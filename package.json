@@ -1,18 +1,13 @@
 {
   "name": "cb",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "Instant Chromium control for Claude Code — a self-bootstrapping wrapper over playwright-cli.",
+  "private": true,
+  "type": "module",
+  "bin": { "cb": "bin/cb.mjs" },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "playwright": "^1.60.0"
   }
