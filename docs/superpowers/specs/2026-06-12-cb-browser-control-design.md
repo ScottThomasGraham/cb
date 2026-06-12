@@ -53,34 +53,53 @@ You (chat) ──▶ Claude Code ──▶ `cb <command>`  (thin, self-bootstrap
                     · user can grab the mouse and take over anytime
 ```
 
-Three components:
+**Engine decision (validated 2026-06-12):** Playwright 1.60 ships a maintained
+first-party CLI, **`playwright-cli`** (bundled at
+`playwright-core/lib/tools/cli-client/`), that already implements the exact model this
+spec calls for: warm named browser sessions held by a background daemon over a Unix
+socket, accessibility-snapshot perception with stable `[ref=eN]` ids, ref-based
+actions, and a deep command surface (navigate, tabs, keyboard, mouse, forms, uploads,
+downloads, cookies/storage, network routing & capture, console, eval, screenshot,
+pdf). A spike confirmed on this machine: headed bundled Chromium + dedicated
+persistent profile launches; a second `cb` invocation reuses the warm session; ref
+actions work; and the V3 all-digit-input bug does not reproduce
+(`fill e2 9144825865` → value `"9144825865"`).
 
-1. **Control core** — a small Node + TypeScript library wrapping Playwright against a
-   persistent, headed Chromium context. Owns the browser lifecycle, the snapshot
-   (accessibility-ref) model, and all action primitives. Engine: **Playwright**
-   (chosen for auto-waiting, ref-based targeting, downloads/uploads, multi-tab, and
-   network interception out of the box).
+Therefore `cb` does **not** re-implement a CDP control core. It **wraps
+`playwright-cli`**, adding only what that tool lacks for this use case. Three
+components:
 
-2. **`cb` — the CLI** — thin client. Each invocation connects to the warm browser
-   over a Unix domain socket and runs one command. If no warm browser is found, it
-   launches one (detached), waits for ready, then runs the command. Prints compact
-   human/LLM-readable text by default; `--json` for structured output.
+1. **`cb` launcher/wrapper** — a thin Node script that ensures a single, warm,
+   **headed**, **bundled-Chromium**, **dedicated-profile** session named `cb` exists,
+   then forwards the user's command to `playwright-cli`. This is the self-bootstrap
+   layer (see below) and the only meaningful code we write.
+
+2. **`cb` — the CLI entry point** — installed on PATH (`~/.local/bin/cb`), plus a
+   `claude-browser` alias for backwards compatibility with existing muscle memory and
+   the memory note. Forwards verbs to `playwright-cli -s=cb`. Compact text output by
+   default; `--raw`/`--json` pass through for structured output.
 
 3. **Claude Code skill** — replaces the old `claude-browser-local` plugin. Documents
-   the `cb` command surface so Claude automatically reaches for it on any web task.
-   This is the "it just works" glue. A `claude-browser` alias on PATH is retained for
-   backwards compatibility with existing muscle memory and the memory note.
+   the `cb` command surface (adapted from the bundled `playwright-cli` SKILL.md) so
+   Claude automatically reaches for it on any web task. This is the "it just works"
+   glue.
 
 ### Warm-browser holder
 
-A long-lived host process owns the Playwright persistent context and listens on the
-Unix socket; the `cb` CLI is a short-lived client that connects per command. Keeping
-Playwright objects warm in one process (rather than reconnecting over CDP per command)
-preserves cross-command capabilities like continuous network logging and live tab
-state. The holder is invisible to the user: auto-spawned by the first `cb` command,
-self-managed thereafter. (Implementation detail — exact host/socket mechanics are
-settled during planning; the contract is "first command launches it, later commands
-attach fast.")
+`playwright-cli` already runs the long-lived holder: its `open` command spawns a
+detached **daemon** that owns the Playwright persistent context and listens on a Unix
+socket keyed by session name; subsequent `playwright-cli -s=cb <cmd>` invocations are
+short-lived clients that attach to it. `cb` does not build this — it relies on it.
+
+### Self-bootstrap (the one real gap `cb` fills)
+
+`playwright-cli` errors (`Browser 'cb' is not open. Run ... open`) if no session
+exists — it does not auto-launch. `cb` closes this gap: on every command, `cb` checks
+whether the `cb` session is open (via `playwright-cli list`); if not, it runs
+`playwright-cli -s=cb open --browser=chromium --persistent --profile=~/.cb/profile
+--headed` first, then forwards the command. Result: the first web action in any chat
+silently launches the browser; everything after attaches in milliseconds. Nothing to
+start manually.
 
 ## How Claude perceives and acts on a page
 
