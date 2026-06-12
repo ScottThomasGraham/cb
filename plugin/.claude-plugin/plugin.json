@@ -1,0 +1,5 @@
+{
+  "name": "cb-local",
+  "version": "1.0.0",
+  "description": "Instant Chromium control for Claude Code via the cb CLI."
+}
