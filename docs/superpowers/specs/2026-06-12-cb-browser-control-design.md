@@ -200,3 +200,13 @@ once); everything after is instant.
 - A second concurrent `cb` command never launches a second browser.
 - The all-digit input bug from V3 does not reproduce (`cb fill <ref> 9144825865`
   succeeds).
+
+---
+<!-- nyx-kb:start -->
+
+## 🔗 Related
+- 🗺️ Domain: [[_Knowledge/🤖 AI Tooling (Nyx)|🤖 AI Tooling (Nyx)]]
+- 🏠 Project hub: [[cb/README|cb]]
+- 🔗 Related: [[cb/docs/superpowers/plans/2026-06-12-cb-browser-control|cb — Chromium control for Claude Code: I]] · [[Claude-Control/docs/superpowers/specs/2026-05-30-claude-control-design|Claude-Control — Design Spec]]
+
+<!-- nyx-kb:end -->

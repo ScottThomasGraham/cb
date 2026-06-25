@@ -959,3 +959,13 @@ ls /Applications | grep -i claude-browser   # expect: nothing
 **Type/name consistency:** `run(args, {capture})` signature is uniform across `runner`, `session.isOpen`, `bootstrap.ensureOpen`, and `cli.main`. `SESSION`/`PROFILE_DIR`/`openArgs`/`NO_BOOTSTRAP` from `config.js` are used consistently. `mapArgs` and `parseOpenSessions`/`isOpen` names match across definition and use.
 
 **Note on real-browser tests:** unit tests (Tasks 2–7) use injected fake runners and never launch Chromium, so `npm test` is fast and CI-safe; live-browser checks are isolated to Task 8 (manual).
+
+---
+<!-- nyx-kb:start -->
+
+## 🔗 Related
+- 🗺️ Domain: [[_Knowledge/🤖 AI Tooling (Nyx)|🤖 AI Tooling (Nyx)]]
+- 🏠 Project hub: [[cb/README|cb]]
+- 🔗 Related: [[cb/docs/superpowers/specs/2026-06-12-cb-browser-control-design|cb — Chromium control for Claude Code]] · [[Claude-Control/docs/superpowers/plans/2026-06-01-rdp-client-plane|RDP-Client Plane Implementation Plan]]
+
+<!-- nyx-kb:end -->

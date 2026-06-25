@@ -17,3 +17,13 @@ Run these once cb is installed and verified. They are destructive; confirm befor
      `~/.claude/plugins/installed_plugins.json`
 6. Verify: `cb status` works; `claude-browser status` (alias) works; the old app is gone
    (`ls /Applications | grep -i claude-browser` → nothing).
+
+---
+<!-- nyx-kb:start -->
+
+## 🔗 Related
+- 🗺️ Domain: [[_Knowledge/🤖 AI Tooling (Nyx)|🤖 AI Tooling (Nyx)]]
+- 🏠 Project hub: [[cb/README|cb]]
+- 🔗 Related: [[neo-bridge/skills/browser-tasks|Nyx Browser Tasks 🌐]]
+
+<!-- nyx-kb:end -->

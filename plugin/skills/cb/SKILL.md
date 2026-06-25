@@ -31,3 +31,13 @@ instantly. There is nothing to start manually.
 - Full upstream surface (cookies, localstorage, route, pdf, tracing, …) passes through `cb`
   unchanged. Reference: `node_modules/playwright-core/lib/tools/cli-client/skill/SKILL.md`
   inside the cb repo (`~/Projects/cb`).
+
+---
+<!-- nyx-kb:start -->
+
+## 🔗 Related
+- 🗺️ Domain: [[_Knowledge/🤖 AI Tooling (Nyx)|🤖 AI Tooling (Nyx)]]
+- 🏠 Project hub: [[cb/README|cb]]
+- 🔗 Related: [[neo-bridge/skills/browser-tasks|Nyx Browser Tasks 🌐]]
+
+<!-- nyx-kb:end -->

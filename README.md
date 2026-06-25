@@ -53,3 +53,12 @@ npm test
 Unit tests use injected fake runners and never launch a browser. Live-browser behavior
 (cold-start bootstrap, warm reuse, ref actions, the all-digit-input fix, lifecycle) was
 verified manually during the build.
+
+---
+<!-- nyx-kb:start -->
+
+## 🔗 Related
+- 🗺️ Domain: [[_Knowledge/🤖 AI Tooling (Nyx)|🤖 AI Tooling (Nyx)]]
+- 🔗 Related: [[cb/docs/superpowers/specs/2026-06-12-cb-browser-control-design|cb — Chromium control for Claude Code]] · [[cb/docs/superpowers/plans/2026-06-12-cb-browser-control|cb — Chromium control for Claude Code: I]] · [[Claude-Control/docs/architecture/implemented-architecture|Implemented architecture (and why it cha]]
+
+<!-- nyx-kb:end -->
